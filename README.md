@@ -1,179 +1,110 @@
 # Autonomous-2D-Grid-City-Agent-Sampada-Mittal
 1. Problem Statement: Using a dynamic map, describe in brief the difficulty of determining the best or most efficient route for an autonomous agent to take from a starting point to a destination. 2. Project Goal: The goal of this work is to design, implement, and compare different search algorithms for this pathfinding problem.
 
-##Project Overview
+# Autonomous Pathfinding Agent  
 
-This project implements an autonomous pathfinding agent that navigates 2D grid-based maps with varying terrains and dynamic obstacles. The system models both static terrains (roads, parks, water, buildings) and moving obstacles, enabling the agent to find efficient and feasible routes under different constraints.
+## Project Overview  
+This project implements an autonomous pathfinding agent that navigates 2D grid-based maps with varying terrains and dynamic obstacles.  
+The system models both static terrains (roads, parks, water, buildings) and moving obstacles, enabling the agent to find efficient and feasible routes under different constraints.  
 
-The project supports multiple search algorithms (uninformed, informed, and metaheuristic) and allows experimental comparison of their performance across maps of different sizes.
+The project supports multiple search algorithms (uninformed, informed, and metaheuristic) and allows experimental comparison of their performance across maps of different sizes.  
 
-##Key Objectives
+---
 
-Model 2D grid environments with terrain costs, static obstacles, and dynamic obstacles.
+## Key Objectives  
+- Model 2D grid environments with terrain costs, static obstacles, and dynamic obstacles.  
+- Implement rational planning strategies that balance cost, path length, and computational efficiency.  
+- Provide visualization of maps and computed paths.  
+- Enable experimental benchmarking of algorithms across different scenarios.  
 
-Implement rational planning strategies that balance cost, path length, and computational efficiency.
+---
 
-Provide visualization of maps and computed paths.
+## Features  
+- Terrain modeling: empty cells, expressways, parks, water, buildings, and impassable obstacles.  
+- Dynamic obstacle handling with time-based schedules.  
+- Multiple planning algorithms:  
+  - Uninformed search: Breadth-First Search (BFS), Uniform Cost Search (UCS)  
+  - Informed search: A* (Manhattan, Euclidean heuristics)  
+  - Metaheuristic search: Simulated Annealing (path optimization & replanning)  
+- 4-connected movement (up, down, left, right).  
+- Built-in map generator for small, medium, large, and dynamic maps.  
+- Visualization with matplotlib to render grids and paths.  
+- Metrics logging: nodes expanded, path cost, computation time.  
+- CLI interface for running custom or comparative experiments.  
 
-Enable experimental benchmarking of algorithms across different scenarios.
+---
 
-Features
+## Installation  
 
-Terrain modeling: empty cells, expressways, parks, water, buildings, and impassable obstacles.
+Clone the repository and navigate into the project folder:  
 
-Dynamic obstacle handling with time-based schedules.
-
-Multiple planning algorithms:
-
-Uninformed search: Breadth-First Search (BFS), Uniform Cost Search (UCS)
-
-Informed search: A* (Manhattan, Euclidean heuristics)
-
-Metaheuristic search: Simulated Annealing (path optimization & replanning)
-
-4-connected movement (up, down, left, right).
-
-Built-in map generator for small, medium, large, and dynamic maps.
-
-Visualization with matplotlib to render grids and paths.
-
-Metrics logging: nodes expanded, path cost, computation time.
-
-CLI interface for running custom or comparative experiments.
-
-Installation
-
-Clone the repository and navigate into the project folder:
-
+```bash
 git clone <repo_url>
 cd pathfinding-agent
-
+```
 
 Create and activate a virtual environment:
 
-python -m venv venv
+python -m venv envi_agent
 # On Linux/Mac
-source venv/bin/activate
+source envi_agent/bin/activate
 # On Windows
-venv\Scripts\activate
+envi_agent\Scripts\activate
 
 
 Install dependencies:
-
 pip install -r requirements.txt
 
 Usage (CLI)
-
-Run with default settings (auto-generates maps):
-
-python main.py
-
-
-Run a specific algorithm on a map:
-
-python main.py small.map 0 0 4 4 --algorithm astar --heuristic manhattan --visualize
+```bash
+Run a planner on a single map:
+python run.py --planner astar --map maps/small.grid --verbose
+```
 
 
-Compare all algorithms on a map:
+Run dynamic replanning with obstacle schedules:
+```bash
+python run.py --planner astar --map maps/dynamic.grid --schedule schedules/dynamic.schedule --dynamic --verbose
+```
 
-python main.py small.map 0 0 4 4 --compare
+Available Planners
 
-Available Algorithms
+bfs – Breadth-first search
+ucs – Uniform-cost search
+astar – A* search with an admissible heuristic
+local – Local search / replanning
 
-bfs → Breadth-First Search
+Options
 
-ucs → Uniform Cost Search
-
-astar → A* Search (Manhattan / Euclidean)
-
-sa → Simulated Annealing
+--verbose / -v : Print detailed logs of the agent's actions and path.
+--dynamic : Enable dynamic replanning for environments with moving obstacles.
+--schedule / -s : Provide a file path for a dynamic obstacle schedule.
 
 Experiments & Results
 
-Compare BFS, UCS, A*, and Simulated Annealing on multiple maps.
-
-Reported metrics:
-
-Path cost
-
-Path length
-
-Nodes expanded
-
-Computation time
-
-Visualization of grid maps and paths (via --visualize).
-
-Dynamic obstacle tests included (dynamic.map).
+Compare planners across multiple maps.
+Metrics reported: path cost, nodes expanded, time, and collisions.
+Visualize agent trajectories on dynamic maps using --verbose.
+Example logs and demo videos are included in demos/demo_dynamic_run.mp4.
 
 Tests
-
-Run unit tests to validate core modules:
-
+Run unit tests to verify core functionality:
+```bash
 pytest tests/
+```
 
+Tests include:
 
-Tests cover:
-
-Map parsing and grid loading.
-
-Terrain and cost assignments.
-
-BFS, UCS, A*, and SA correctness.
+mapio: Grid and schedule loading, neighbor computation, collision checking.
+planners: Path correctness and cost for BFS, UCS, A*, and local search.
 
 Dependencies
+Python ≥ 3.8 recommended.
+See requirements.md for full dependency list.
 
-Python >= 3.8
-
-numpy
-
-matplotlib
-Installation
-
-Clone the repository and navigate into the project folder:
-
-git clone <repo_url>
-cd pathfinding-agent
+Notes
+Grids use integer movement costs ≥ 1. Obstacles are impassable.
+Agent movement is deterministic; dynamic obstacles follow predefined schedules.
+Local search can simulate unpredictable obstacle behavior.
 
 
-Create and activate a virtual environment:
-
-python -m venv venv
-# On Linux/Mac
-source venv/bin/activate
-# On Windows
-venv\Scripts\activate
-
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Usage (CLI)
-
-Run with default settings (auto-generates maps):
-
-python main.py
-
-
-Run a specific algorithm on a map:
-
-python main.py small.map 0 0 4 4 --algorithm astar --heuristic manhattan --visualize
-
-
-Compare all algorithms on a map:
-
-python main.py small.map 0 0 4 4 --compare
-
-Dependencies
-
-Python >= 3.8
-
-numpy
-
-matplotlib
-python -m venv venv
-# On Linux/Mac
-source venv/bin/activate
-# On Windows
-venv\Scripts\activate
