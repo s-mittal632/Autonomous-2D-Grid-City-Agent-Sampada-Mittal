@@ -172,3 +172,8 @@ Python >= 3.8
 numpy
 
 matplotlib
+python -m venv venv
+# On Linux/Mac
+source venv/bin/activate
+# On Windows
+venv\Scripts\activate
