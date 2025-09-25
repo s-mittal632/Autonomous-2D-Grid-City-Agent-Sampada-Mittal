@@ -1,58 +1,107 @@
 # Autonomous-2D-Grid-City-Agent-Sampada-Mittal
 1. Problem Statement: Using a dynamic map, describe in brief the difficulty of determining the best or most efficient route for an autonomous agent to take from a starting point to a destination. 2. Project Goal: The goal of this work is to design, implement, and compare different search algorithms for this pathfinding problem.
+# Autonomous Delivery Agent
 
-Project Overview
-This project simulates and compares various search algorithms used by an autonomous agent to find optimal paths across a grid map. The environment features heterogeneous terrain (varying movement costs) and dynamic, time-dependent obstacles. The goal is to analyze the trade-offs between path cost (optimality) and computational efficiency (speed).
+## Project Overview
+This project implements an autonomous delivery agent that navigates a 2D grid city to deliver packages efficiently. The agent models both static and dynamic environments, accounting for varying terrain costs and moving obstacles.
 
-Key Objectives
+#### Key Objectives:
 
-Cost Optimization: Find the path with the minimum total travel cost.
-Dynamic World Modeling: Navigate environments with time-varying, moving obstacles.
-Algorithm Comparison: Analyze and compare four main search strategies based on performance metrics like path cost, nodes expanded, and runtime.
+* Model the environment (static obstacles, terrain costs, dynamic obstacles).
+* Plan rational actions that optimize delivery efficiency under constraints (time, fuel).
+* Implement multiple planning strategies:
+    * **Uninformed search:** `BFS`, `Uniform-cost search (UCS)`
+    * **Informed search:** `A*` with an admissible heuristic
+    * **Local search / replanning:** `Hill-climbing` / `simulated annealing` for dynamic obstacles
 
-Features
+The project allows for the experimental comparison of planners on multiple maps and provides visual/log outputs demonstrating the agent's behavior.
 
-Multi-Cost Terrain: Supports movement costs for terrain types like EMPTY, EXPRESSWAY, PARK, and WATER.
-Time-Space Search: Algorithms operate in the state space of (X, Y, Time) to handle moving obstacles.
-Performance Metrics: Tracks Path Cost, Path Length, Nodes Expanded, and Computation Time.
-Visualization: Uses Matplotlib to plot the calculated path on the grid map.
+## Features
+* **4-connected movement** (`up`/`down`/`left`/`right`) on a grid.
+* Supports **dynamic obstacle schedules** for replanning scenarios.
+* **CLI interface** to run single or batch planning experiments.
+* **Logging** and optional verbose **visualization** of agent movement.
+* Predefined **test maps**: `small`, `medium`, `large`, and dynamic obstacle scenarios.
+* **Unit tests** for map IO and planners, ensuring reproducibility.
 
-Available Planners
 
-The project implements the following search algorithms:
-Uninformed: Breadth-First Search (BFS) and Uniform-Cost Search (UCS).
-Informed: A* Search (with Manhattan and Euclidean heuristics).
-Metaheuristic: Simulated Annealing (SA) for path optimization.
+## Installation
 
-Dependencies
+1.  **Clone the repository** and enter the directory:
+    ```bash
+    git clone <repo_url>
+    cd delivery-agent
+    ```
 
-The project requires the following standard Python libraries:
-numpy: For efficient array and grid manipulation.
-matplotlib.pyplot: For path visualization.
-heapq: For priority queue implementation (UCS and A*).
+2.  **Create a virtual environment** (recommended):
+    ```bash
+    python -m venv envi_agent
+    ```
 
-Installation
-Install the required libraries using pip:
+3.  **Activate the environment**:
+    * On **Linux/Mac**:
+        ```bash
+        source envi_agent/bin/activate
+        ```
+    * On **Windows**:
+        ```powershell
+        envi_agent\Scripts\activate
+        ```
 
-Bash
-pip install numpy matplotlib
-Usage
-Single Run
-Execute the main.py script with the map file, coordinates, and desired algorithm.
+4.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Bash
-# Example: Run A* with visualization
-python main.py medium.map 0 0 9 9 --algorithm astar --heuristic manhattan -v
-Algorithm Comparison
-Use the --compare flag to automatically run all implemented planners on a map and print a performance summary.
+## Usage (CLI)
 
-Bash
-# Example: Compare all algorithms on the dynamic map
-python main.py dynamic.map 0 0 4 4 --compare
+#### Run a planner on a single map:
+```bash
+python run.py --planner astar --map maps/small.grid --verbose
+```
 
-Experiments and Results
+#### Run dynamic replanning with obstacle schedules:
 
-In general, the A* planner offers the best balance of optimality (low cost) and efficiency (low nodes expanded) due to its use of an effective heuristic. UCS guarantees the optimal path but is generally slower than A*. The performance analysis focuses on proving A*'s superiority in balancing computational speed against path quality in this multi-cost environment.
+```bash
+python run.py --planner astar --map maps/dynamic.grid --schedule schedules/dynamic.schedule --dynamic --verbose
+```
 
-Notes
-The script automatically generates test map files (small.map, medium.map, large.map, dynamic.map) if they do not exist when running the default or comparison modes.
+### Available Planners:
+* `bfs` – Breadth-first search
+* `ucs` – Uniform-cost search
+* `astar` – A* search with an admissible heuristic
+* `local` – Local search / replanning
+
+### Options:
+* `--verbose` / `-v`: Print detailed logs of the agent's actions and path.
+* `--dynamic`: Enable dynamic replanning for environments with moving obstacles.
+* `--schedule` / `-s`: Provide a file path for a dynamic obstacle schedule.
+
+## Experiments & Results
+* Compare planners across multiple maps.
+* Metrics reported: **path cost**, **nodes expanded**, **time**, and **collisions**.
+* Visualize agent trajectories on dynamic maps (optional, via `--verbose`).
+* Example log outputs and a demo video are included in `demos/demo_dynamic_run.mp4`.
+
+## Tests
+Run unit tests to verify core functionality:
+```bash
+pytest tests/
+```
+
+**Tests include:**
+
+* **mapio**: Grid and schedule loading, neighbor computation, and collision checking.
+* **planners**: Path correctness and cost for `BFS`, `UCS`, `A*`, and local search.
+
+
+## Dependencies
+* See `requirements.md` for the detailed dependency list.
+* **Python `≥ 3.8`** is recommended.
+
+---
+
+## Notes
+* Grids use integer movement costs `≥ 1`. Obstacles are impassable.
+* Agent movement is deterministic; dynamic obstacles follow predefined schedules.
+* Local search can simulate unpredictable obstacle behavior.
