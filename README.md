@@ -1,13 +1,13 @@
 # Autonomous-2D-Grid-City-Agent-Sampada-Mittal
 1. Problem Statement: Using a dynamic map, describe in brief the difficulty of determining the best or most efficient route for an autonomous agent to take from a starting point to a destination. 2. Project Goal: The goal of this work is to design, implement, and compare different search algorithms for this pathfinding problem.
-## Autonomous Pathfinding Agent
-Project Overview
+
+##Project Overview
 
 This project implements an autonomous pathfinding agent that navigates 2D grid-based maps with varying terrains and dynamic obstacles. The system models both static terrains (roads, parks, water, buildings) and moving obstacles, enabling the agent to find efficient and feasible routes under different constraints.
 
 The project supports multiple search algorithms (uninformed, informed, and metaheuristic) and allows experimental comparison of their performance across maps of different sizes.
 
-## Key Objectives
+##Key Objectives
 
 Model 2D grid environments with terrain costs, static obstacles, and dynamic obstacles.
 
@@ -17,7 +17,7 @@ Provide visualization of maps and computed paths.
 
 Enable experimental benchmarking of algorithms across different scenarios.
 
-## Features
+Features
 
 Terrain modeling: empty cells, expressways, parks, water, buildings, and impassable obstacles.
 
@@ -41,7 +41,7 @@ Metrics logging: nodes expanded, path cost, computation time.
 
 CLI interface for running custom or comparative experiments.
 
-## Installation
+Installation
 
 Clone the repository and navigate into the project folder:
 
@@ -62,7 +62,7 @@ Install dependencies:
 
 pip install -r requirements.txt
 
-## Usage (CLI)
+Usage (CLI)
 
 Run with default settings (auto-generates maps):
 
@@ -88,7 +88,7 @@ astar → A* Search (Manhattan / Euclidean)
 
 sa → Simulated Annealing
 
-## Experiments & Results
+Experiments & Results
 
 Compare BFS, UCS, A*, and Simulated Annealing on multiple maps.
 
@@ -106,7 +106,7 @@ Visualization of grid maps and paths (via --visualize).
 
 Dynamic obstacle tests included (dynamic.map).
 
-## Tests
+Tests
 
 Run unit tests to validate core modules:
 
@@ -115,26 +115,16 @@ pytest tests/
 
 Tests cover:
 
-Map parsing & grid loading.
+Map parsing and grid loading.
 
 Terrain and cost assignments.
 
 BFS, UCS, A*, and SA correctness.
 
-## Dependencies
+Dependencies
 
-Python ≥ 3.8
+Python >= 3.8
 
 numpy
 
 matplotlib
-
-## Notes
-
-Obstacles and buildings are impassable.
-
-Movement costs vary by terrain (e.g., parks = 2, water = 5).
-
-Dynamic obstacles follow time-based schedules.
-
-Fuel constraints can be specified as an additional limit.
