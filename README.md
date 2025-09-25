@@ -128,3 +128,47 @@ Python >= 3.8
 numpy
 
 matplotlib
+Installation
+
+Clone the repository and navigate into the project folder:
+
+git clone <repo_url>
+cd pathfinding-agent
+
+
+Create and activate a virtual environment:
+
+python -m venv venv
+# On Linux/Mac
+source venv/bin/activate
+# On Windows
+venv\Scripts\activate
+
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Usage (CLI)
+
+Run with default settings (auto-generates maps):
+
+python main.py
+
+
+Run a specific algorithm on a map:
+
+python main.py small.map 0 0 4 4 --algorithm astar --heuristic manhattan --visualize
+
+
+Compare all algorithms on a map:
+
+python main.py small.map 0 0 4 4 --compare
+
+Dependencies
+
+Python >= 3.8
+
+numpy
+
+matplotlib
