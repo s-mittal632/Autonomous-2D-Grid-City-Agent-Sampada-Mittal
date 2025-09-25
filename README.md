@@ -43,68 +43,92 @@ git clone <repo_url>
 cd pathfinding-agent
 ```
 
-Create and activate a virtual environment:
+---
 
+## Create and activate a virtual environment:
+```bash
 python -m venv envi_agent
 # On Linux/Mac
 source envi_agent/bin/activate
 # On Windows
 envi_agent\Scripts\activate
+```
 
+---
 
-Install dependencies:
+## Install dependencies:
+```bash
 pip install -r requirements.txt
+```
 
-Usage (CLI)
+---
+
+## Usage (CLI)
 ```bash
 Run a planner on a single map:
 python run.py --planner astar --map maps/small.grid --verbose
 ```
 
+---
 
-Run dynamic replanning with obstacle schedules:
+## Run dynamic replanning with obstacle schedules:
 ```bash
 python run.py --planner astar --map maps/dynamic.grid --schedule schedules/dynamic.schedule --dynamic --verbose
 ```
 
-Available Planners
+---
+
+## Available Planners
 
 bfs – Breadth-first search
 ucs – Uniform-cost search
 astar – A* search with an admissible heuristic
 local – Local search / replanning
 
-Options
+---
+
+## Options
 
 --verbose / -v : Print detailed logs of the agent's actions and path.
 --dynamic : Enable dynamic replanning for environments with moving obstacles.
 --schedule / -s : Provide a file path for a dynamic obstacle schedule.
 
-Experiments & Results
+---
+
+## Experiments & Results
 
 Compare planners across multiple maps.
 Metrics reported: path cost, nodes expanded, time, and collisions.
 Visualize agent trajectories on dynamic maps using --verbose.
 Example logs and demo videos are included in demos/demo_dynamic_run.mp4.
 
-Tests
+---
+
+## Tests
 Run unit tests to verify core functionality:
 ```bash
 pytest tests/
 ```
 
-Tests include:
+---
+
+## Tests include:
 
 mapio: Grid and schedule loading, neighbor computation, collision checking.
 planners: Path correctness and cost for BFS, UCS, A*, and local search.
 
-Dependencies
+---
+
+## Dependencies
 Python ≥ 3.8 recommended.
 See requirements.md for full dependency list.
 
-Notes
+---
+
+## Notes
 Grids use integer movement costs ≥ 1. Obstacles are impassable.
 Agent movement is deterministic; dynamic obstacles follow predefined schedules.
 Local search can simulate unpredictable obstacle behavior.
 
+---
 
